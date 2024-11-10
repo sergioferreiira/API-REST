@@ -1,0 +1,113 @@
+openapi: 3.0.3
+info:
+  title: Lista de Usuários
+  description: Esta API fornece acesso aos usuários do sistema
+  contact:
+    name: Jackson
+    email: jack@gmail.com
+  version: 0.0.1
+servers:
+- url: https://api.meusite.com/v1
+paths:
+  /user/create:
+    post:
+      tags:
+      - Users
+      summary: Cria um usuário
+      description: Este endpoint cria um usuário
+      operationId: user_create_post
+      responses:
+        "200":
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /user/read:
+    get:
+      tags:
+      - Users
+      summary: Retorna todos os usuários
+      description: Este endpoint retorna todos os usuários cadastrados no sistema
+      operationId: user_read_get
+      responses:
+        "200":
+          description: Uma lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /user/{id}:
+    get:
+      tags:
+      - Users
+      summary: Retorna um usuário específico
+      description: Este endpoint retorna apenas um usuário pelo ID
+      operationId: user_id_get
+      parameters:
+      - name: id
+        in: path
+        description: ID do usuário
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Um usuário específico
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /user/update:
+    put:
+      tags:
+      - Users
+      summary: Atualiza um usuário
+      description: Este endpoint atualiza os dados de um usuário
+      operationId: user_update_put
+      responses:
+        "200":
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /user/delete:
+    delete:
+      tags:
+      - Users
+      summary: Deleta um usuário
+      description: Este endpoint deleta um usuário
+      operationId: user_delete_delete
+      responses:
+        "200":
+          description: Usuário deletado com sucesso
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Código do usuário
+        email:
+          type: string
+          description: Email do usuário
+        senha:
+          type: string
+          description: Senha do usuário
+      example:
+        senha: senha
+        id: 0
+        email: email
+
